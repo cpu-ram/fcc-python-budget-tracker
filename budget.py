@@ -32,7 +32,7 @@ class Category:
             return False
 
     def get_balance(self):
-        return reduce(lambda x, y: x+y[amount], self.ledger, 0)
+        return reduce(lambda x, y: x+y['amount'], self.ledger, 0)
 
     def transfer(self, amount, to):
         if self.check_funds(amount):

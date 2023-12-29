@@ -2,13 +2,11 @@ from functools import reduce
 
 
 class Category:
-
-    ledger = []
-    name = ""
-    total = 0
-
     def __init__(self, name):
         self.name = name
+        ledger = []
+        name = ""
+        total = 0
 
     def __str__(self):
         result = self.name.center(30, '*')

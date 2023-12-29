@@ -13,8 +13,8 @@ class Category:
         result = reduce(
             lambda accum, item: accum
             + "\n"
-            + item[description][:23].ljust(23, ' ')
-            + str(round(item[amount], 2))[:7].rjust(7, ' '),
+            + item[self.description][:23].ljust(23, ' ')
+            + str(round(item[self.amount], 2))[:7].rjust(7, ' '),
             self.ledger,
             result
         )
@@ -32,7 +32,7 @@ class Category:
             return False
 
     def get_balance(self):
-        return reduce(lambda x, y: x+y[amount], ledger, 0)
+        return reduce(lambda x, y: x+y[amount], self.ledger, 0)
 
     def transfer(self, amount, to):
         if self.check_funds(amount):

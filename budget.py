@@ -22,11 +22,11 @@ class Category:
         return result
 
     def deposit(self, amount, description=""):
-        self.ledger.add({"amount": amount, "description": description})
+        self.ledger.append({"amount": amount, "description": description})
 
     def withdraw(self, amount, description):
         if this.check_funds(amount):
-            self.ledger.add({"amount": -amount, "description": description})
+            self.ledger.append({"amount": -amount, "description": description})
             return True
         else:
             return False

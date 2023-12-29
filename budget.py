@@ -1,4 +1,5 @@
 from functools import reduce
+from str import rjust, ljust
 
 
 class Category:

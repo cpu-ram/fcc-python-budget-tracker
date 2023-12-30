@@ -1,13 +1,13 @@
 from functools import reduce
-from str import rjust, ljust
+# from str import rjust, ljust
 
 
 class Category:
     def __init__(self, name):
         self.name = name
-        ledger = []
-        name = ""
-        total = 0
+        self.ledger = []
+        self.name = ""
+        self.total = 0
 
     def __str__(self):
         result = self.name.center(30, '*')
@@ -53,10 +53,10 @@ class Category:
 def create_spend_chart(*args):
     result = ""
     total = reduce(lambda x, y: x+y.get_balance(), args, 0)
-    names_percentages = map(lambda x:
-                            {"amount": round(x.get_balance()/total*100, -1),
-                             "name": x.name},
-                            args).sort(lambda x: x[amount])
+    names_percentages = list(map(lambda x:
+                                 {"amount": round(x.get_balance()/total*100, -1),
+                                  "name": x.name},
+                                 args)).sort(lambda x: x[amount])
     for i in range(100, -10, -10):
         current_str = rjust(str(i), 3)+"| "
         for name in names_percentages:

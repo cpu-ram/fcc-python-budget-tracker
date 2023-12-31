@@ -1,13 +1,10 @@
 from functools import reduce
-# from str import rjust, ljust
 
 
 class Category:
     def __init__(self, name):
         self.name = name
         self.ledger = []
-        self.name = ""
-        self.total = 0
 
     def __str__(self):
         result = self.name.center(30, '*')
@@ -26,7 +23,7 @@ class Category:
         self.ledger.append({"amount": amount, "description": description})
 
     def withdraw(self, amount, description):
-        if this.check_funds(amount):
+        if self.check_funds(amount):
             self.ledger.append({"amount": -amount, "description": description})
             return True
         else:
@@ -54,28 +51,33 @@ def create_spend_chart(*args):
     result = ""
     total = reduce(lambda x, y: x+y.get_balance(), args, 0)
     names_percentages = list(map(lambda x:
-                                 {"amount": round(x.get_balance()/total*100, -1),
+                                 {"percentage": round(x.get_balance()/total*100, -1),
                                   "name": x.name},
-                                 args)).sort(lambda x: x[amount])
+                                 args))
+    names_percentages = sorted(names_percentages,
+                               key=lambda x: x["percentage"], reverse=True)
     for i in range(100, -10, -10):
-        current_str = rjust(str(i), 3)+"| "
-        for name in names_percentages:
-            if (names_percentages[name] < i):
+        current_str = str(i).rjust(3, " ")+"| "
+        for element in names_percentages:
+            if (element["percentage"] < i):
                 current_str += " "*1
             else:
                 current_str += "o"
             current_str += " "*2
             result += f"\n{current_str}"
-    result += "    -"+"---"*len(names_percentages)
+    result += "\n    -"+"---"*len(names_percentages)
 
-    names_lengths = names_percentages.map(
-        lambda x: {"name": x[name], "length": len(x[name])})
-    maxNameLength = max(names)
+    names_lengths = list(map(
+        lambda x: {"name": x["name"], "length": len(x["name"])},
+        names_percentages))
+    maxNameLength = max(map(lambda x: x["length"], names_lengths))
     for i in range(0, maxNameLength):
         current_str = " "*5
-        for name, length in names_lengths:
-            if (length > i):
-                current_str += name[i]+" "*2
+        for element in names_lengths:
+            if (element["length"] > i):
+                current_str += element["name"][i]+" "*2
             else:
                 current_str += " "*3
-        result += current_str
+        result += "\n"+current_str
+
+    return result

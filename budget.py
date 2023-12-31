@@ -11,8 +11,8 @@ class Category:
         result = reduce(
             lambda accum, item: accum
             + "\n"
-            + item[self.description][:23].ljust(23, ' ')
-            + str(round(item[self.amount], 2))[:7].rjust(7, ' '),
+            + item["description"][:23].ljust(23, ' ')
+            + str(round(item["amount"], 2))[:7].rjust(7, ' '),
             self.ledger,
             result
         )

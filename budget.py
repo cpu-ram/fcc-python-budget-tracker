@@ -64,7 +64,7 @@ def create_spend_chart(categories_list):
             else:
                 current_str += "o"
             current_str += " "*2
-            result += f"\n{current_str}"
+        result += f"\n{current_str}"
     result += "\n    -"+"---"*len(names_percentages)
 
     names_lengths = list(map(

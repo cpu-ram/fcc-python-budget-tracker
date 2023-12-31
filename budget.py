@@ -47,13 +47,13 @@ class Category:
             return True
 
 
-def create_spend_chart(*args):
+def create_spend_chart(categories_list):
     result = ""
-    total = reduce(lambda x, y: x+y.get_balance(), args, 0)
+    total = reduce(lambda x, y: x+y.get_balance(), categories_list, 0)
     names_percentages = list(map(lambda x:
                                  {"percentage": round(x.get_balance()/total*100, -1),
                                   "name": x.name},
-                                 args))
+                                 categories_list))
     names_percentages = sorted(names_percentages,
                                key=lambda x: x["percentage"], reverse=True)
     for i in range(100, -10, -10):

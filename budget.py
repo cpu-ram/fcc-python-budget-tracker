@@ -12,7 +12,7 @@ class Category:
             lambda accum, item: accum
             + "\n"
             + item["description"][:23].ljust(23, ' ')
-            + str(round(item["amount"], 2))[:7].rjust(7, ' '),
+            + f"{item['amount']:.2f}"[:7].rjust(7, ' '),
             self.ledger,
             result
         )

@@ -1,4 +1,5 @@
 from functools import reduce
+import math
 
 
 class Category:
@@ -32,6 +33,9 @@ class Category:
     def get_balance(self):
         return reduce(lambda x, y: x+y['amount'], self.ledger, 0)
 
+    def total_withdrawals(self):
+        return reduce(lambda x, y: x+y["amount"] if y["amount"] < 0 else x, self.ledger, 0)
+
     def transfer(self, amount, to):
         if self.check_funds(amount):
             self.withdraw(amount, f"Transfer to {to.name}")
@@ -48,14 +52,12 @@ class Category:
 
 
 def create_spend_chart(categories_list):
-    result = ""
-    total = reduce(lambda x, y: x+y.get_balance(), categories_list, 0)
+    result = "Percentage spent by category"
+    total = reduce(lambda x, y: x+y.total_withdrawals(), categories_list, 0)
     names_percentages = list(map(lambda x:
-                                 {"percentage": round(x.get_balance()/total*100, -1),
+                                 {"percentage": math.floor((x.total_withdrawals()/total*100) / 10)*10,
                                   "name": x.name},
                                  categories_list))
-    names_percentages = sorted(names_percentages,
-                               key=lambda x: x["percentage"], reverse=True)
     for i in range(100, -10, -10):
         current_str = str(i).rjust(3, " ")+"| "
         for element in names_percentages:
